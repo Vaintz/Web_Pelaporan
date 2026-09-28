@@ -358,10 +358,19 @@ Route::middleware(['auth', 'role:admin_biro'])
         Route::post('/laporan/{laporan}/selesai', [AdminBiroLaporanController::class, 'selesaikanLaporan'])
             ->name('laporan.selesai');
 
+        // =========================
         // BERITA ACARA
-        Route::get('/berita-acara', function () {
-            return view('admin-biro.berita-acara');
-        })->name('berita');
+        // =========================
+    
+        Route::get(
+            '/berita-acara',
+            [AdminBiroLaporanController::class, 'beritaAcaraAdminBiro']
+        )->name('berita');
+
+        Route::get(
+            '/berita-acara/{laporan}',
+            [AdminBiroLaporanController::class, 'detailBeritaAcaraAdminBiro']
+        )->name('berita.detail');
 
         // PROFIL
         Route::get('/profil', [ProfileController::class, 'show'])

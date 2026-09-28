@@ -837,25 +837,214 @@ class LaporanController extends Controller
     }
 
     public function selesaikanLaporan(Laporan $laporan)
-{
-    // Hanya laporan yang sedang ditugaskan
-    if ($laporan->status !== 'ditugaskan') {
-        return back()->with('error', 'Laporan belum berstatus ditugaskan.');
-    }
+    {
+        // Hanya laporan yang sedang ditugaskan
+        if ($laporan->status !== 'ditugaskan') {
+            return back()->with('error', 'Laporan belum berstatus ditugaskan.');
+        }
 
-    $laporan->update([
-        'status' => 'selesai',
-    ]);
-
-    // Teknisi kembali tersedia
-    if ($laporan->teknisi) {
-        $laporan->teknisi->update([
-            'status' => 'tersedia',
+        $laporan->update([
+            'status' => 'selesai',
         ]);
+
+        // Teknisi kembali tersedia
+        if ($laporan->teknisi) {
+            $laporan->teknisi->update([
+                'status' => 'tersedia',
+            ]);
+        }
+
+        return redirect()
+            ->route('admin.biro.laporan', $laporan->id)
+            ->with('success', 'Laporan berhasil diselesaikan.');
     }
 
-    return redirect()
-        ->route('admin.biro.laporan', $laporan->id)
-        ->with('success', 'Laporan berhasil diselesaikan.');
-}
+    /**
+     * ==========================================
+     * DAFTAR BERITA ACARA ADMIN BIRO
+     * ==========================================
+     */
+    public function beritaAcaraAdminBiro(Request $request)
+    {
+        $query = Laporan::with([
+            'kategori',
+            'gedung',
+            'ruangan',
+            'foto',
+            'user',
+            'teknisi'
+        ])->where('status', 'selesai');
+
+        // =========================
+        // PENCARIAN
+        // =========================
+
+        if ($request->filled('search')) {
+
+            $search = $request->search;
+
+            $query->where(function ($q) use ($search) {
+
+                $q->where(
+                    'nomor_laporan',
+                    'like',
+                    '%' . $search . '%'
+                )
+                    ->orWhere(
+                        'judul_laporan',
+                        'like',
+                        '%' . $search . '%'
+                    )
+                    ->orWhereHas('user', function ($user) use ($search) {
+
+                        $user->where(
+                            'name',
+                            'like',
+                            '%' . $search . '%'
+                        );
+                    });
+            });
+        }
+
+        // =========================
+        // FILTER KATEGORI
+        // =========================
+
+        if ($request->filled('kategori')) {
+
+            $query->where(
+                'kategori_kerusakan_id',
+                $request->kategori
+            );
+        }
+
+        // =========================
+        // FILTER TANGGAL
+        // =========================
+
+        if ($request->filled('tanggal')) {
+
+            switch ($request->tanggal) {
+
+                case 'hari_ini':
+
+                    $query->whereDate(
+                        'created_at',
+                        today()
+                    );
+
+                    break;
+
+                case '7_hari':
+
+                    $query->where(
+                        'created_at',
+                        '>=',
+                        now()->subDays(7)
+                    );
+
+                    break;
+
+                case '30_hari':
+
+                    $query->where(
+                        'created_at',
+                        '>=',
+                        now()->subDays(30)
+                    );
+
+                    break;
+            }
+        }
+
+        // =========================
+        // PER PAGE
+        // =========================
+
+        $perPage = $request->get('per_page', 5);
+
+        if (!in_array($perPage, [5, 10, 50])) {
+            $perPage = 5;
+        }
+
+        // =========================
+        // DATA
+        // =========================
+
+        $laporans = $query
+            ->latest()
+            ->paginate($perPage)
+            ->withQueryString();
+
+        // =========================
+        // KATEGORI
+        // =========================
+
+        $kategori = KategoriKerusakan::orderBy('nama')->get();
+
+        // =========================
+        // STATISTIK
+        // =========================
+
+        $totalBeritaAcara = Laporan::where(
+            'status',
+            'selesai'
+        )->count();
+
+        $bulanIni = Laporan::where(
+            'status',
+            'selesai'
+        )
+            ->whereMonth('updated_at', now()->month)
+            ->whereYear('updated_at', now()->year)
+            ->count();
+
+        $denganTeknisi = Laporan::where(
+            'status',
+            'selesai'
+        )
+            ->whereNotNull('teknisi_id')
+            ->count();
+
+        return view(
+            'admin-biro.berita-acara',
+            compact(
+                'laporans',
+                'kategori',
+                'totalBeritaAcara',
+                'bulanIni',
+                'denganTeknisi'
+            )
+        );
+    }
+
+
+    /**
+     * ==========================================
+     * DETAIL BERITA ACARA ADMIN BIRO
+     * ==========================================
+     */
+    public function detailBeritaAcaraAdminBiro(
+        Laporan $laporan
+    ) {
+        // Berita acara biro hanya untuk
+        // laporan yang sudah selesai.
+        if ($laporan->status !== 'selesai') {
+            abort(404);
+        }
+
+        $laporan->load([
+            'kategori',
+            'gedung',
+            'ruangan',
+            'foto',
+            'user',
+            'teknisi'
+        ]);
+
+        return view(
+            'admin-biro.berita-acara-detail',
+            compact('laporan')
+        );
+    }
 }
