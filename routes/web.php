@@ -254,9 +254,15 @@ Route::middleware(['auth', 'role:admin_fakultas'])->group(function () {
         [AdminFakultasLaporanController::class, 'detailAdminFakultas']
     )->name('admin.fakultas.riwayat.detail');
 
-    Route::get('/admin-fakultas/berita-acara', function () {
-        return view('admin-fakultas.berita-acara');
-    })->name('admin.fakultas.berita');
+    Route::get(
+        '/admin-fakultas/berita-acara',
+        [AdminFakultasLaporanController::class, 'beritaAcaraAdminFakultas']
+    )->name('admin.fakultas.berita');
+
+    Route::get(
+        '/admin-fakultas/berita-acara/{laporan}',
+        [AdminFakultasLaporanController::class, 'detailBeritaAcaraAdminFakultas']
+    )->name('admin.fakultas.berita.detail');
 
     Route::get(
         '/admin-fakultas/profil',
@@ -321,60 +327,60 @@ Route::middleware(['auth', 'role:admin_fakultas'])->group(function () {
 // });
 
 Route::middleware(['auth', 'role:admin_biro'])
-    ->prefix('admin-biro') 
-    ->name('admin.biro.') 
+    ->prefix('admin-biro')
+    ->name('admin.biro.')
     ->group(function () {
 
-    // DASHBOARD & LAPORAN (Dari Blok 1 & 2)
-    Route::get('/dashboard', [AdminBiroLaporanController::class, 'dashboardAdminBiro'])
-        ->name('dashboard');
+        // DASHBOARD & LAPORAN (Dari Blok 1 & 2)
+        Route::get('/dashboard', [AdminBiroLaporanController::class, 'dashboardAdminBiro'])
+            ->name('dashboard');
 
-    Route::get('/laporan-masuk', [AdminBiroLaporanController::class, 'laporanMasukAdminBiro'])
-        ->name('laporan');
+        Route::get('/laporan-masuk', [AdminBiroLaporanController::class, 'laporanMasukAdminBiro'])
+            ->name('laporan');
 
-    Route::get('/laporan-masuk/{laporan}', [AdminBiroLaporanController::class, 'detailLaporanMasukAdminBiro'])
-        ->name('laporan.detail');
+        Route::get('/laporan-masuk/{laporan}', [AdminBiroLaporanController::class, 'detailLaporanMasukAdminBiro'])
+            ->name('laporan.detail');
 
-    Route::post('/laporan/{laporan}/verifikasi', [AdminBiroLaporanController::class, 'verifikasiAdminBiro'])
-        ->name('laporan.verifikasi');
+        Route::post('/laporan/{laporan}/verifikasi', [AdminBiroLaporanController::class, 'verifikasiAdminBiro'])
+            ->name('laporan.verifikasi');
 
-    // RIWAYAT LAPORAN
-    Route::get('/riwayat-laporan', [AdminBiroLaporanController::class, 'riwayatAdminBiro'])
-        ->name('riwayat');
+        // RIWAYAT LAPORAN
+        Route::get('/riwayat-laporan', [AdminBiroLaporanController::class, 'riwayatAdminBiro'])
+            ->name('riwayat');
 
-    Route::get('/riwayat-laporan/{id}', [AdminBiroLaporanController::class, 'detailRiwayatAdminBiro'])
-        ->name('riwayat.detail');
+        Route::get('/riwayat-laporan/{id}', [AdminBiroLaporanController::class, 'detailRiwayatAdminBiro'])
+            ->name('riwayat.detail');
 
-    // AKSI LAPORAN (Tugaskan & Selesai)
-    Route::post('/laporan/{laporan}/tugaskan', [AdminBiroLaporanController::class, 'tugaskanTeknisi'])
-        ->name('laporan.tugaskan');
+        // AKSI LAPORAN (Tugaskan & Selesai)
+        Route::post('/laporan/{laporan}/tugaskan', [AdminBiroLaporanController::class, 'tugaskanTeknisi'])
+            ->name('laporan.tugaskan');
 
-    Route::post('/laporan/{laporan}/selesai', [AdminBiroLaporanController::class, 'selesaikanLaporan'])
-        ->name('laporan.selesai');
+        Route::post('/laporan/{laporan}/selesai', [AdminBiroLaporanController::class, 'selesaikanLaporan'])
+            ->name('laporan.selesai');
 
-    // BERITA ACARA
-    Route::get('/berita-acara', function () {
-        return view('admin-biro.berita-acara');
-    })->name('berita');
+        // BERITA ACARA
+        Route::get('/berita-acara', function () {
+            return view('admin-biro.berita-acara');
+        })->name('berita');
 
-    // PROFIL
-    Route::get('/profil', [ProfileController::class, 'show'])
-        ->name('profil');
+        // PROFIL
+        Route::get('/profil', [ProfileController::class, 'show'])
+            ->name('profil');
 
-    // MANAJEMEN PENGGUNA
-    Route::get('/pengguna', [UserController::class, 'index'])->name('pengguna.index');
-    Route::get('/pengguna/tambah', [UserController::class, 'create'])->name('pengguna.create');
-    Route::post('/pengguna', [UserController::class, 'store'])->name('pengguna.store');
-    Route::get('/pengguna/{id}', [UserController::class, 'show'])->name('pengguna.show');
-    Route::get('/pengguna/{id}/edit', [UserController::class, 'edit'])->name('pengguna.edit');
-    Route::put('/pengguna/{id}', [UserController::class, 'update'])->name('pengguna.update');
-    Route::put('/pengguna/{id}/status', [UserController::class, 'toggleStatus'])->name('pengguna.status');
+        // MANAJEMEN PENGGUNA
+        Route::get('/pengguna', [UserController::class, 'index'])->name('pengguna.index');
+        Route::get('/pengguna/tambah', [UserController::class, 'create'])->name('pengguna.create');
+        Route::post('/pengguna', [UserController::class, 'store'])->name('pengguna.store');
+        Route::get('/pengguna/{id}', [UserController::class, 'show'])->name('pengguna.show');
+        Route::get('/pengguna/{id}/edit', [UserController::class, 'edit'])->name('pengguna.edit');
+        Route::put('/pengguna/{id}', [UserController::class, 'update'])->name('pengguna.update');
+        Route::put('/pengguna/{id}/status', [UserController::class, 'toggleStatus'])->name('pengguna.status');
 
-    // ROUTE CRUD (RESOURCE)
-    Route::resource('prodi', ProdiController::class)->except(['show']);
-    Route::resource('gedung', GedungController::class)->except(['show']);
-    Route::resource('ruangan', RuanganController::class)->except(['show']);
-    Route::resource('kategori-kerusakan', KategoriKerusakanController::class)->except(['show']);
-    Route::resource('teknisi', TeknisiController::class)->except(['show']);
+        // ROUTE CRUD (RESOURCE)
+        Route::resource('prodi', ProdiController::class)->except(['show']);
+        Route::resource('gedung', GedungController::class)->except(['show']);
+        Route::resource('ruangan', RuanganController::class)->except(['show']);
+        Route::resource('kategori-kerusakan', KategoriKerusakanController::class)->except(['show']);
+        Route::resource('teknisi', TeknisiController::class)->except(['show']);
 
-});
+    });
