@@ -364,6 +364,39 @@
             background: #fafafa;
         }
 
+        /* Teknisi yang sedang dipilih */
+        .technician-option.selected {
+            background: #f0f1f7;
+            border-left: 3px solid #242238;
+            padding-left: 7px;
+            box-shadow: inset 0 0 0 1px #d8d9e5;
+        }
+
+        .technician-option.selected .technician-avatar {
+            background: #242238;
+            color: #ffffff;
+        }
+
+        .technician-option.selected .technician-name {
+            color: #242238;
+        }
+
+        .technician-option.selected::after {
+            content: '✓';
+            width: 22px;
+            height: 22px;
+            margin-left: auto;
+            border-radius: 50%;
+            background: #242238;
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
         .technician-option input {
             display: none;
         }
@@ -1338,6 +1371,49 @@
                 });
 
             });
+
+
+            // Tampilkan efek visual saat teknisi dipilih
+            const technicianOptions =
+                document.querySelectorAll('.technician-option');
+
+            function updateSelectedTechnician() {
+
+                technicianOptions.forEach(function (option) {
+                    option.classList.remove('selected');
+                });
+
+                const checked =
+                    document.querySelector(
+                        '.technician-option input[name="teknisi_id"]:checked'
+                    );
+
+                if (checked) {
+                    checked.closest('.technician-option')
+                        ?.classList.add('selected');
+                }
+            }
+
+            technicianOptions.forEach(function (option) {
+
+                const radio =
+                    option.querySelector('input[name="teknisi_id"]');
+
+                if (!radio) {
+                    return;
+                }
+
+                radio.addEventListener('change', function () {
+                    updateSelectedTechnician();
+                });
+
+                option.addEventListener('click', function () {
+                    setTimeout(updateSelectedTechnician, 0);
+                });
+
+            });
+
+            updateSelectedTechnician();
 
         });
     </script>
