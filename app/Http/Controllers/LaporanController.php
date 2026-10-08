@@ -617,7 +617,6 @@ class LaporanController extends Controller
         $query = Laporan::with([
             'kategori',
             'gedung',
-            'ruangan',
             'foto'
         ])->where('user_id', $userId);
 
@@ -789,7 +788,6 @@ class LaporanController extends Controller
         $laporan->load([
             'kategori',
             'gedung',
-            'ruangan',
             'foto'
         ]);
 
@@ -840,7 +838,6 @@ class LaporanController extends Controller
         $query = Laporan::with([
             'kategori',
             'gedung',
-            'ruangan',
             'foto',
             'user'
         ])->whereIn('status', [
@@ -1002,7 +999,6 @@ class LaporanController extends Controller
         $laporan->load([
             'kategori',
             'gedung',
-            'ruangan',
             'foto',
             'user'
         ]);
@@ -1025,7 +1021,6 @@ class LaporanController extends Controller
         $query = Laporan::with([
             'kategori',
             'gedung',
-            'ruangan',
             'foto',
             'user'
         ])->where(
@@ -1114,7 +1109,6 @@ class LaporanController extends Controller
         $laporan->load([
             'kategori',
             'gedung',
-            'ruangan',
             'foto',
             'user'
         ]);
@@ -1135,7 +1129,6 @@ class LaporanController extends Controller
         $query = Laporan::with([
             'kategori',
             'gedung',
-            'ruangan',
             'foto',
             'user'
         ])->whereIn('status', [
@@ -1256,7 +1249,6 @@ class LaporanController extends Controller
         $laporan->load([
             'kategori',
             'gedung',
-            'ruangan',
             'foto',
             'user'
         ]);
@@ -1323,7 +1315,6 @@ class LaporanController extends Controller
         $laporan = Laporan::with([
             'kategori',
             'gedung',
-            'ruangan',
             'foto',
             'user',
             'teknisi'
@@ -1466,7 +1457,6 @@ class LaporanController extends Controller
         $query = Laporan::with([
             'kategori',
             'gedung',
-            'ruangan',
             'foto',
             'user',
             'teknisi'
@@ -1646,11 +1636,8 @@ class LaporanController extends Controller
         )->get();
 
 
-        // Ruangan
-
-        $ruangans = Ruangan::orderBy(
-            'nama'
-        )->get();
+        // Ruangan tetap dipakai untuk daftar lantai
+        $ruangans = Ruangan::orderBy('nama')->get();
 
 
         return view(
@@ -1684,10 +1671,8 @@ class LaporanController extends Controller
                 'required|exists:kategori_kerusakans,id',
 
             'gedung_id' =>
-                'required|exists:gedungs,id',
-
-            'ruangan_id' =>
-                'required|exists:ruangans,id',
+                'required|exists:gedungs,id' =>
+                'required|string|max:255',
 
             'judul_laporan' =>
                 'required|string|max:255',
@@ -1739,10 +1724,8 @@ class LaporanController extends Controller
                     $request->kategori_kerusakan_id,
 
                 'gedung_id' =>
-                    $request->gedung_id,
-
-                'ruangan_id' =>
-                    $request->ruangan_id,
+                    $request->gedung_id =>
+                    $request->ruangan,
 
                 'judul_laporan' =>
                     $request->judul_laporan,
