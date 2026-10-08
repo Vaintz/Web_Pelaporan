@@ -491,7 +491,7 @@
                     <div class="label">Tanggal Dibuat</div>
                     <div class="colon">:</div>
                     <div class="value">
-                        {{ $tanggalBeritaAcara?->format('d F Y') ?? '-' }}
+                        {{ $tanggalBeritaAcara?->translatedFormat('d F Y') ?? '-' }}
                     </div>
 
                     <div class="label">Nomor Laporan</div>
@@ -567,7 +567,7 @@
                     <div class="label">Tanggal Laporan</div>
                     <div class="colon">:</div>
                     <div class="value">
-                        {{ $laporan->created_at?->format('d F Y') ?? '-' }}
+                        {{ $laporan->created_at?->translatedFormat('d F Y') ?? '-' }}
                     </div>
 
                     <div class="label">Gedung</div>
@@ -702,7 +702,7 @@
                     <div class="label">Tanggal Penerusan</div>
                     <div class="colon">:</div>
                     <div class="value">
-                        {{ $tanggalBeritaAcara?->format('d F Y') ?? '-' }}
+                        {{ $tanggalBeritaAcara?->translatedFormat('d F Y') ?? '-' }}
                     </div>
 
                     <div class="label">Admin Fakultas</div>
@@ -769,7 +769,7 @@
                 <p class="doc-paragraph">
                     Pada tanggal
                     <strong>
-                        {{ $tanggalBeritaAcara?->format('d F Y') ?? '-' }}
+                        {{ $tanggalBeritaAcara?->translatedFormat('d F Y') ?? '-' }}
                     </strong>,
                     telah dilakukan verifikasi terhadap laporan yang diajukan melalui
                     sistem pelaporan Universitas Malikussaleh.
@@ -820,7 +820,7 @@
 
                     <tr>
                         <td>Tanggal Laporan</td>
-                        <td>: {{ $laporan->created_at?->format('d F Y') ?? '-' }}</td>
+                        <td>: {{ $laporan->created_at?->translatedFormat('d F Y') ?? '-' }}</td>
                     </tr>
 
                     <tr>
@@ -874,7 +874,7 @@
 
                     <div style="text-align:right;">
                         Lhokseumawe,
-                        {{ $tanggalBeritaAcara?->format('d F Y') ?? '-' }}
+                        {{ $tanggalBeritaAcara?->translatedFormat('d F Y') ?? '-' }}
                     </div>
 
 
