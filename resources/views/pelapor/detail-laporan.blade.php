@@ -762,7 +762,7 @@
                     <span class="info-value">
 
                         {{ $laporan->created_at
-                            ? $laporan->created_at->format('d F Y, H:i')
+                            ? $laporan->created_at->translatedFormat('d F Y, H:i')
                             : '-' }}
 
                     </span>
