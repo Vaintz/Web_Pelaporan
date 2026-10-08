@@ -568,7 +568,7 @@
                             </div>
 
                             <div class="location-value">
-                                {{ $laporan->ruangan->nama ?? '-' }}
+                                {{ $laporan->ruangan ?? '-' }}
                             </div>
 
                         </div>
