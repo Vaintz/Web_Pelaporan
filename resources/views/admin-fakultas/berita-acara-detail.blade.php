@@ -579,7 +579,7 @@
                     <div class="label">Ruangan</div>
                     <div class="colon">:</div>
                     <div class="value">
-                        {{ $laporan->ruangan?->nama ?? '-' }}
+                        {{ $laporan->ruangan ?? '-' }}
                     </div>
 
                     <div class="label">Detail Lokasi</div>
@@ -830,7 +830,7 @@
 
                     <tr>
                         <td>Ruangan</td>
-                        <td>: {{ $laporan->ruangan?->nama ?? '-' }}</td>
+                        <td>: {{ $laporan->ruangan ?? '-' }}</td>
                     </tr>
 
                     <tr>
