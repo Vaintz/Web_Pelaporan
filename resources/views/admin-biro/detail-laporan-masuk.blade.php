@@ -649,7 +649,7 @@
                             {{ $laporan->gedung->nama ?? '' }}
 
                             @if ($laporan->ruangan)
-                                , {{ $laporan->ruangan->nama ?? '' }}
+                                , {{ $laporan->ruangan ?? '' }}
                             @endif
                         @else
                             {{ $laporan->detail_lokasi ?? '-' }}
