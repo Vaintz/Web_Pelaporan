@@ -249,7 +249,9 @@ class LaporanController extends Controller
                 'required|exists:kategori_kerusakans,id',
 
             'gedung_id' =>
-                'required|exists:gedungs,id' =>
+                'required|exists:gedungs,id',
+
+            'ruangan' =>
                 'required|string|max:255',
 
             'judul_laporan' =>
@@ -280,7 +282,9 @@ class LaporanController extends Controller
                     $request->kategori_kerusakan_id,
 
                 'gedung_id' =>
-                    $request->gedung_id =>
+                    $request->gedung_id,
+
+                'ruangan' =>
                     $request->ruangan,
 
                 'judul_laporan' =>
