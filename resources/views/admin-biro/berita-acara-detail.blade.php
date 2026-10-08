@@ -23,7 +23,7 @@
 
     $lokasi = collect([
         $laporan->gedung?->nama,
-        $laporan->ruangan?->nama,
+        $laporan->ruangan,
         $laporan->detail_lokasi,
     ])->filter()->implode(' ');
 
