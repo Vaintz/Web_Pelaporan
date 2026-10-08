@@ -504,7 +504,7 @@
                     <div class="ba-label">Tanggal Dibuat</div>
                     <div class="ba-colon">:</div>
                     <div class="ba-value">
-                        {{ $tanggalLaporan?->format('d F Y') ?? '-' }}
+                        {{ $tanggalLaporan?->translatedFormat('d F Y') ?? '-' }}
                     </div>
 
                     <div class="ba-label">Nomor Laporan</div>
@@ -580,7 +580,7 @@
                     <div class="ba-label">Tanggal Laporan</div>
                     <div class="ba-colon">:</div>
                     <div class="ba-value">
-                        {{ $tanggalLaporan?->format('d F Y') ?? '-' }}
+                        {{ $tanggalLaporan?->translatedFormat('d F Y') ?? '-' }}
                     </div>
 
                     <div class="ba-label">Lokasi Kejadian</div>
@@ -652,7 +652,7 @@
                     <div class="ba-label">Tanggal Verifikasi Biro</div>
                     <div class="ba-colon">:</div>
                     <div class="ba-value">
-                        {{ $tanggalVerifikasiBiro?->format('d F Y') ?? '-' }}
+                        {{ $tanggalVerifikasiBiro?->translatedFormat('d F Y') ?? '-' }}
                     </div>
 
                     <div class="ba-label">Ditugaskan Kepada</div>
@@ -673,13 +673,13 @@
 
                         @if($tanggalPenugasan && $targetSelesai)
 
-                            {{ $tanggalPenugasan->format('d F Y') }}
+                            {{ $tanggalPenugasan->translatedFormat('d F Y') }}
                             -
-                            {{ $targetSelesai->format('d F Y') }}
+                            {{ $targetSelesai->translatedFormat('d F Y') }}
 
                         @elseif($tanggalPenugasan)
 
-                            {{ $tanggalPenugasan->format('d F Y') }}
+                            {{ $tanggalPenugasan->translatedFormat('d F Y') }}
 
                         @else
 
@@ -817,7 +817,7 @@
 
                     Pada tanggal
                     <strong>
-                        {{ $tanggalLaporan?->format('d F Y') ?? '-' }}
+                        {{ $tanggalLaporan?->translatedFormat('d F Y') ?? '-' }}
                     </strong>,
                     telah dilakukan tindak lanjut terhadap laporan
                     yang diajukan melalui sistem pelaporan
@@ -876,7 +876,7 @@
 
                     <tr>
                         <td>Tanggal Laporan</td>
-                        <td>: {{ $tanggalLaporan?->format('d F Y') ?? '-' }}</td>
+                        <td>: {{ $tanggalLaporan?->translatedFormat('d F Y') ?? '-' }}</td>
                     </tr>
 
                     <tr>
@@ -891,12 +891,12 @@
 
                     <tr>
                         <td>Tanggal Penugasan</td>
-                        <td>: {{ $tanggalPenugasan?->format('d F Y') ?? '-' }}</td>
+                        <td>: {{ $tanggalPenugasan?->translatedFormat('d F Y') ?? '-' }}</td>
                     </tr>
 
                     <tr>
                         <td>Target Selesai</td>
-                        <td>: {{ $targetSelesai?->format('d F Y') ?? '-' }}</td>
+                        <td>: {{ $targetSelesai?->translatedFormat('d F Y') ?? '-' }}</td>
                     </tr>
 
                 </table>
@@ -954,7 +954,7 @@
                 <div class="ba-doc-footer-date">
 
                     Lhokseumawe,
-                    {{ now()->format('d F Y') }}
+                    {{ now()->translatedFormat('d F Y') }}
 
                 </div>
 
