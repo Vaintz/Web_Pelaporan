@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Models\Laporan;
 use App\Models\KategoriKerusakan;
 use App\Models\Gedung;
-use App\Models\Ruangan;
 use App\Models\Teknisi;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -326,7 +325,6 @@ class LaporanController extends Controller
         $query = Laporan::with([
             'kategori',
             'gedung',
-            'ruangan',
             'foto',
             'user'
         ])->whereIn('status', [
@@ -446,7 +444,6 @@ class LaporanController extends Controller
         $laporan->load([
             'kategori',
             'gedung',
-            'ruangan',
             'foto',
             'user',
             'teknisi'
@@ -524,7 +521,6 @@ class LaporanController extends Controller
         $laporan = Laporan::with([
             'kategori',
             'gedung',
-            'ruangan',
             'foto',
             'user',
             'teknisi'
@@ -683,7 +679,6 @@ class LaporanController extends Controller
         $query = Laporan::with([
             'kategori',
             'gedung',
-            'ruangan',
             'foto',
             'user',
             'teknisi'
@@ -869,7 +864,6 @@ class LaporanController extends Controller
         $query = Laporan::with([
             'kategori',
             'gedung',
-            'ruangan',
             'foto',
             'user',
             'teknisi'
@@ -1036,7 +1030,6 @@ class LaporanController extends Controller
         $laporan->load([
             'kategori',
             'gedung',
-            'ruangan',
             'foto',
             'user',
             'teknisi'
