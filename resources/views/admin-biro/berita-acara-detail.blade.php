@@ -1000,27 +1000,6 @@
                 </div>
 
 
-                <div
-                    style="
-                        margin-top: 25px;
-                        text-align: center;
-                    "
-                >
-
-                    Pelaksana / Penanggung Jawab
-
-                    <div class="ba-signature-space"></div>
-
-                    <div class="ba-signature-name">
-                        {{ $teknisi?->nama ?? '__________________________' }}
-                    </div>
-
-                    <div>
-                        NIP.
-                    </div>
-
-                </div>
-
             </div>
 
 
