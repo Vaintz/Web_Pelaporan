@@ -926,7 +926,7 @@
 
                     <div class="location-value">
 
-                        Lantai {{ $laporan->ruangan->lantai ?? '-' }}
+                        Lantai {{ $laporan->ruangan ?? '-' }}
 
                     </div>
 
@@ -943,7 +943,7 @@
 
                     <div class="location-value">
 
-                        {{ $laporan->ruangan->nama ?? '-' }}
+                        {{ $laporan->ruangan ?? '-' }}
 
                     </div>
 
