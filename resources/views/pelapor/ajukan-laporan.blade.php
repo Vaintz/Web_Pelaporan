@@ -1031,23 +1031,18 @@
                             <span class="required">*</span>
                         </label>
 
-                        <select id="ruangan" name="ruangan_id"
-                            class="form-control @error('ruangan_id') is-invalid @enderror">
+                        <input type="text"
+                            id="ruangan"
+                            name="ruangan"
+                            value="{{ old('ruangan') }}"
+                            class="form-control @error('ruangan') is-invalid @enderror"
+                            placeholder="Contoh: Ruang 101">
 
-                            <option value="">
-                                Pilih Ruangan
-                            </option>
-
-                        </select>
-
-                        @error('ruangan_id')
-
+                        @error('ruangan')
                             <div class="error-text">
                                 {{ $message }}
                             </div>
-
                         @enderror
-
                     </div>
 
 
@@ -1184,38 +1179,17 @@
         const lantaiSelect =
             document.getElementById('lantai');
 
-        const ruanganSelect =
-            document.getElementById('ruangan');
-
-
-        const oldLantai =
-            "{{ old('lantai') }}";
-
-        const oldRuangan =
-            "{{ old('ruangan_id') }}";
-
-
-        /* =========================================================
-           UPDATE LANTAI
-        ========================================================= */
-
         function updateLantai() {
 
             const gedungId =
                 gedungSelect.value;
 
-
             lantaiSelect.innerHTML =
                 '<option value="">Pilih Lantai</option>';
-
-            ruanganSelect.innerHTML =
-                '<option value="">Pilih Ruangan</option>';
-
 
             if (!gedungId) {
                 return;
             }
-
 
             const filtered =
                 ruanganData.filter(
@@ -1223,7 +1197,6 @@
                         String(item.gedung_id)
                         === String(gedungId)
                 );
-
 
             const lantai = [
                 ...new Set(
@@ -1233,253 +1206,44 @@
                 )
             ];
 
-
             lantai.sort(
                 (a, b) =>
                     String(a).localeCompare(
                         String(b),
                         undefined,
-                        {
-                            numeric: true
-                        }
+                        { numeric: true }
                     )
             );
-
 
             lantai.forEach(value => {
 
                 const option =
                     document.createElement('option');
 
-                option.value =
-                    value;
+                option.value = value;
 
                 option.textContent =
                     'Lantai ' + value;
 
-
                 if (
                     String(value)
-                    === String(oldLantai)
+                    === String("{{ old('lantai') }}")
                 ) {
                     option.selected = true;
                 }
-
 
                 lantaiSelect.appendChild(option);
-
-            });
-
-
-            updateRuangan();
-        }
-
-
-        /* =========================================================
-           UPDATE RUANGAN
-        ========================================================= */
-
-        function updateRuangan() {
-
-            const gedungId =
-                gedungSelect.value;
-
-            const lantai =
-                lantaiSelect.value;
-
-
-            ruanganSelect.innerHTML =
-                '<option value="">Pilih Ruangan</option>';
-
-
-            if (!gedungId || !lantai) {
-                return;
-            }
-
-
-            const filtered =
-                ruanganData.filter(item =>
-
-                    String(item.gedung_id)
-                    === String(gedungId)
-
-                    &&
-
-                    String(item.lantai)
-                    === String(lantai)
-
-                );
-
-
-            filtered.forEach(item => {
-
-                const option =
-                    document.createElement('option');
-
-                option.value =
-                    item.id;
-
-                option.textContent =
-                    item.nama;
-
-
-                if (
-                    String(item.id)
-                    === String(oldRuangan)
-                ) {
-                    option.selected = true;
-                }
-
-
-                ruanganSelect.appendChild(option);
-
             });
         }
-
-
-        /* =========================================================
-           EVENT
-        ========================================================= */
 
         gedungSelect.addEventListener(
             'change',
-            function () {
-
-                updateLantai();
-
-            }
+            updateLantai
         );
-
-
-        lantaiSelect.addEventListener(
-            'change',
-            function () {
-
-                updateRuangan();
-
-            }
-        );
-
-
-        /* =========================================================
-           INITIAL
-        ========================================================= */
 
         if (gedungSelect.value) {
-
             updateLantai();
-
         }
-
-
-        /* =========================================================
-           FOTO PREVIEW
-        ========================================================= */
-
-        const fotoInput =
-            document.getElementById('foto');
-
-        const previewContainer =
-            document.getElementById(
-                'preview-container'
-            );
-
-        const photoCount =
-            document.getElementById(
-                'photo-count'
-            );
-
-
-        fotoInput.addEventListener(
-            'change',
-            function () {
-
-                previewContainer.innerHTML = '';
-
-
-                const files =
-                    Array.from(this.files);
-
-
-                if (files.length > 5) {
-
-                    alert(
-                        'Maksimal 5 foto.'
-                    );
-
-                    this.value = '';
-
-                    photoCount.textContent =
-                        'Belum ada foto dipilih.';
-
-                    return;
-                }
-
-
-                files.forEach(
-                    (file, index) => {
-
-                        const reader =
-                            new FileReader();
-
-
-                        reader.onload =
-                            function (event) {
-
-                                const item =
-                                    document.createElement(
-                                        'div'
-                                    );
-
-
-                                item.className =
-                                    'preview-item';
-
-
-                                item.innerHTML = `
-                                                                    <img
-                                                                        src="${event.target.result}"
-                                                                        alt="Preview foto"
-                                                                    >
-
-                                                                    <button
-                                                                        type="button"
-                                                                        class="preview-remove"
-                                                                        onclick="removePreview(${index})"
-                                                                    >
-                                                                        ×
-                                                                    </button>
-                                                                `;
-
-
-                                previewContainer.appendChild(
-                                    item
-                                );
-
-                            };
-
-
-                        reader.readAsDataURL(file);
-
-                    }
-                );
-
-
-                if (files.length > 0) {
-
-                    photoCount.textContent =
-                        files.length +
-                        ' foto dipilih.';
-
-                } else {
-
-                    photoCount.textContent =
-                        'Belum ada foto dipilih.';
-
-                }
-
-            }
-        );
 
     </script>
 
