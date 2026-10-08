@@ -12,7 +12,7 @@ class Laporan extends Model
         'user_id',
         'kategori_kerusakan_id',
         'gedung_id',
-        'ruangan_id',
+        'ruangan',
         'judul_laporan',
         'deskripsi_kerusakan',
         'detail_lokasi',
@@ -53,11 +53,6 @@ class Laporan extends Model
     public function gedung()
     {
         return $this->belongsTo(Gedung::class);
-    }
-
-    public function ruangan()
-    {
-        return $this->belongsTo(Ruangan::class);
     }
 
     public function foto()
