@@ -274,7 +274,6 @@ class LaporanController extends Controller
         $query = Laporan::with([
             'kategori',
             'gedung',
-            'ruangan',
             'foto',
             'user'
         ])->whereIn('status', [
@@ -435,7 +434,6 @@ class LaporanController extends Controller
         $laporan->load([
             'kategori',
             'gedung',
-            'ruangan',
             'foto',
             'user'
         ]);
@@ -458,7 +456,6 @@ class LaporanController extends Controller
         $query = Laporan::with([
             'kategori',
             'gedung',
-            'ruangan',
             'foto',
             'user'
         ])->where(
@@ -553,7 +550,6 @@ class LaporanController extends Controller
         $laporan->load([
             'kategori',
             'gedung',
-            'ruangan',
             'foto',
             'user'
         ]);
@@ -584,7 +580,6 @@ class LaporanController extends Controller
         $query = Laporan::with([
             'kategori',
             'gedung',
-            'ruangan',
             'foto',
             'user'
         ])->whereIn('status', [
@@ -806,7 +801,6 @@ class LaporanController extends Controller
         $laporan->load([
             'kategori',
             'gedung',
-            'ruangan',
             'foto',
             'user'
         ]);
