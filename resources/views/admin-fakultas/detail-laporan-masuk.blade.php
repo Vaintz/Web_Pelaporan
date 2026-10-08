@@ -781,7 +781,7 @@
                         @endif
 
                         @if($laporan->ruangan)
-                            , {{ $laporan->ruangan->nama }}
+                            , {{ $laporan->ruangan }}
                         @endif
 
                     </div>
